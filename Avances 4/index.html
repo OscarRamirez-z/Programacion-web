@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>GODS GYM - Tu gimnasio de élite</title>
+    <style>
+        html {
+    scroll-behavior: smooth;
+}
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+
+        /* encabezao */
+        header {
+            background-color: black;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 35px;
+            font-weight: bold;
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 25px 0 0 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            color: red;
+        }
+
+        .section {
+            padding: 60px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            background-color: #2d2d2d;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+             background-image: url('FotoPortada.jpg'); 
+             background-size: cover; 
+             background-position: center; 
+        }
+
+        .hero h1 {
+            font-size: 55px;
+            margin-bottom: 25px;
+        }
+
+        .hero p {
+            font-size: 22px;
+            margin-bottom: 35px;
+        }
+
+        .cta-button {
+            background-color: red;
+            color: white;
+            padding: 18px 35px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background-color: #cc0000;
+        }
+
+        h2 {
+            font-size: 35px;
+            text-align: center;
+            color: black;
+            margin-bottom: 40px;
+        }
+
+        .about-content {
+            background-color: #f8f8f8;
+            padding: 40px;
+            text-align: center;
+            font-size: 17px;
+            line-height: 1.8;
+            border-radius: 10px;
+        }
+
+        .services {
+            background-color: #2d2d2d;
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .services h2 {
+            color: white;
+        }
+
+        .services-grid {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            gap: 25px;
+        }
+
+        .service-card {
+            background-color: gray;
+            padding: 30px;
+            width: 280px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .service-card h3 {
+            color: red;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .service-card p {
+            line-height: 1.6;
+        }
+
+        .service-image {
+            width: 100%;
+            height: 180px;
+            background-color: #555;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .schedule-table {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border: 1px solid black;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: black;
+            color: white;
+            padding: 20px;
+        }
+
+        td {
+            padding: 20px;
+            border: 1px solid gray;
+            background-color: white;
+        }
+
+        .pricing {
+            background-color: #f0f0f0;
+            padding: 60px 20px;
+        }
+
+        .pricing-grid {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            gap: 25px;
+        }
+
+        .pricing-card {
+            background-color: white;
+            padding: 30px;
+            width: 280px;
+            text-align: center;
+            border: 1px solid gray;
+            border-radius: 10px;
+        }
+
+        .pricing-card.featured {
+            border: 3px solid red;
+        }
+
+        .pricing-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 35px;
+            font-weight: bold;
+            color: red;
+            margin: 20px 0;
+        }
+
+        .features {
+            list-style: none;
+            padding: 0;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .features li {
+            padding: 8px 0;
+            line-height: 1.5;
+        }
+
+        .testimonials {
+            background-color: white;
+            padding: 60px 20px;
+        }
+
+        .testimonials-grid {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            gap: 25px;
+        }
+
+        .testimonial-card {
+            background-color: #f8f8f8;
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .testimonial-image {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .testimonial-name {
+            font-weight: bold;
+            font-size: 18px;
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-stars {
+            color: #ffd700;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .contact-content {
+            background-color: #f8f8f8;
+            padding: 40px;
+            border-radius: 10px;
+        }
+
+        .contact-info {
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            color: black;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        .contact-info p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        footer {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        footer p {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">GODS GYM</div>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#sobre-nosotros">Sobre Nosotros</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#horarios">Horarios</a></li>
+                <li><a href="#precios">Precios</a></li>
+                <li><a href="#testimonios">Testimonios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="inicio" class="hero">
+        <h1>GODS GYM</h1>
+        <p>Donde los dioses entrenan</p>
+        <!-- ÚNICO CAMBIO: Este botón ahora redirige a la página de inscripción -->
+        <a href="inscripcion.html" class="cta-button">Únete Ahora</a>
+    </section>
+
+    <section id="sobre-nosotros" class="section">
+        <h2>Sobre Nosotros</h2>
+        <div class="about-content">
+            <p>GODS GYM es más que un gimnasio: es un templo dedicado al desarrollo físico y mental, donde desde atletas de élite hasta principiantes alcanzan su máximo potencial. Con equipos de última generación, entrenadores certificados y un ambiente motivador, aquí no solo transformas tu cuerpo, también forjas tu carácter.</p>
+        </div>
+    </section>
+
+    <section id="servicios" class="services">
+        <h2>Nuestros Servicios</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <img src="ServicioMusculacion.jpg" 
+                style="width:100%; height:180px; border-radius:8px; object-fit:cover;">
+                <h3>Musculación</h3>
+                <p>Área de pesas completa con equipos de última tecnología para desarrollar fuerza y masa muscular.</p>
+            </div>
+            <div class="service-card">
+                <img src="ServicioClasesGrupales.jpg"
+                style="width:100%; height:180px; border-radius:8px; object-fit:cover;">
+                <h3>Clases Grupales</h3>
+                <p>Variedad de clases como CrossFit, HIIT, Spinning y más, dirigidas por instructores certificados.</p>
+            </div>
+            <div class="service-card">
+                <img src="ServicioEntrenadorPersonal.jpg" 
+                style="width:100%; height:180px; border-radius:8px; object-fit:cover;">
+                <h3>Entrenamiento Personal</h3>
+                <p>Sesiones individuales con entrenadores especializados para alcanzar tus objetivos específicos.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="horarios" class="section">
+        <h2>Horarios</h2>
+        <div class="schedule-table">
+            <table>
+                <tr>
+                    <th>Día</th>
+                    <th>Horario</th>
+                </tr>
+                <tr>
+                    <td>Lunes - Domingo</td>
+                    <td>5:00 AM - 9:00 PM</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="precios" class="pricing">
+        <h2>Planes de Membresía</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Plan Básico</h3>
+                <div class="price">40.000/mes</div>
+                <ul class="features">
+                    <li>• Acceso a área de pesas</li>
+                    <li>• Área cardiovascular</li>
+                    <li>• Vestuarios y duchas</li>
+                    <li>• Horario completo</li>
+                </ul>
+                <a href="#contacto" class="cta-button">Elegir Plan</a>
+            </div>
+            <div class="pricing-card featured">
+                <h3>Plan Premium</h3>
+                <div class="price">$55.000/mes</div>
+                <ul class="features">
+                    <li>• Todo del Plan Básico</li>
+                    <li>• Clases grupales ilimitadas</li>
+                    <li>• Área funcional</li>
+                    <li>• Evaluación física mensual</li>
+                    <li>• Plan nutricional básico</li>
+                </ul>
+                <a href="#contacto" class="cta-button">Elegir Plan</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Plan Elite</h3>
+                <div class="price">80.000/mes</div>
+                <ul class="features">
+                    <li>• Todo del Plan Premium</li>
+                    <li>• Entrenamiento personal (2 sesiones/mes)</li>
+                    <li>• Plan nutricional personalizado</li>
+                    <li>• Acceso prioritario</li>
+                    <li>• Invitado gratis 2 veces/mes</li>
+                </ul>
+                <a href="#contacto" class="cta-button">Elegir Plan</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonios" class="testimonials">
+        <h2>Testimonios</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <img src="Testimonio1.png" 
+                style="width:100px; height:100px; border-radius:50%; object-fit:cover;">
+                <div class="testimonial-name">Penyair</div>
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"El mejor gimnasio in the guorl"</p>
+            </div>
+            <div class="testimonial-card">
+                <img src="Testimonio2.png" 
+                style="width:100px; height:100px; border-radius:50%; object-fit:cover;">
+                <div class="testimonial-name">Ricardo Fuentes</div>
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"Me encanto la clase pilates, recomendado"</p>
+            </div>
+            <div class="testimonial-card">
+                <img src="Testimonio3.png" 
+                 style="width:100px; height:100px; border-radius:50%; object-fit:cover;">
+                <div class="testimonial-name">[Gustavini Vaguini]</div>
+                <div class="testimonial-stars">⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"Tienen los mejores entrenadores de la ciudad, me encanta lo musculosos que son"</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="section">
+        <h2>Contacto</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>Información de Contacto</h3>
+                <p><strong>Dirección:</strong><br>
+                Calle 7 #7-77<br>
+                Barrio Centro</p>
+                
+                <p><strong>Teléfono:</strong><br>
+            +57 3053797024    </p>
+                
+                <p><strong>Email:</strong><br>
+                u20241221201@usco.edu.co</p>
+                
+                <p><strong>Horarios de Atención:</strong><br>
+                Lunes a Domingo: 5:00 AM - 9:00 PM</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Donde los dioses entrenan</p>
+    </footer>
+
+</body>
+</html>
