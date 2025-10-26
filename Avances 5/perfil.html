@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>GODS GYM - Mi Perfil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: black;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 35px;
+            font-weight: bold;
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        .info-usuario {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .boton-cerrar-sesion {
+            background-color: red;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .boton-cerrar-sesion:hover {
+            background-color: #cc0000;
+        }
+
+        .contenedor-perfil {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .tarjeta {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tarjeta h2 {
+            color: red;
+            font-size: 28px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .info-item {
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .info-item strong {
+            display: block;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .info-item span {
+            color: black;
+            font-size: 16px;
+        }
+
+        .sin-datos {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .lista-reservas {
+            display: grid;
+            gap: 20px;
+        }
+
+        .reserva-card {
+            background-color: #f8f8f8;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid red;
+        }
+
+        .reserva-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .reserva-numero {
+            font-weight: bold;
+            color: red;
+            font-size: 18px;
+        }
+
+        .reserva-estado {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .estado-pendiente {
+            background-color: #fff9e6;
+            color: #cc8800;
+        }
+
+        .estado-pagado {
+            background-color: #e6ffe6;
+            color: #00aa00;
+        }
+
+        .reserva-detalles {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .detalle-item {
+            font-size: 14px;
+        }
+
+        .detalle-item strong {
+            color: #666;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .botones-navegacion {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .boton {
+            background-color: red;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .boton:hover {
+            background-color: #cc0000;
+        }
+
+        .boton-admin {
+            background-color: #ff0000;
+            border: 2px solid #fff;
+        }
+
+        .boton-admin:hover {
+            background-color: #cc0000;
+        }
+
+        .boton-secundario {
+            background-color: #666;
+        }
+
+        .boton-secundario:hover {
+            background-color: #555;
+        }
+
+        footer {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin: 8px 0;
+        }
+
+        .cargando {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">GODS GYM</div>
+        <p style="color: white; margin-top: 10px;">Mi Perfil</p>
+        <div class="info-usuario">
+            <button class="boton-cerrar-sesion" onclick="cerrarSesion()">Cerrar Sesión</button>
+        </div>
+    </header>
+
+    <div class="cargando" id="cargando">
+        Cargando información...
+    </div>
+
+    <div class="contenedor-perfil" id="contenedor-perfil" style="display: none;">
+        <!-- la info del usuario -->
+        <div class="tarjeta">
+            <h2>Información Personal</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Nombre</strong>
+                    <span id="perfil-nombre"></span>
+                </div>
+                <div class="info-item">
+                    <strong>Correo</strong>
+                    <span id="perfil-email"></span>
+                </div>
+                <div class="info-item">
+                    <strong>Fecha de Registro</strong>
+                    <span id="perfil-fecha"></span>
+                </div>
+                <div class="info-item">
+                    <strong>Estado</strong>
+                    <span id="perfil-estado">Usuario Activo</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- el historial -->
+        <div class="tarjeta">
+            <h2>Historial de Membresías</h2>
+            <div class="lista-reservas" id="lista-reservas">
+                <div class="sin-datos">No tienes reservas todavía</div>
+            </div>
+        </div>
+
+        <div class="botones-navegacion">
+            <a href="inscripcion.html" class="boton">Nueva Membresía</a>
+            <a href="clases.html" class="boton">Ver Clases Grupales</a>
+            <a href="admin.html" class="boton boton-admin" id="boton-admin" style="display: none;">🔒 Panel Administrador</a>
+            <a href="index.html" class="boton boton-secundario">Volver al Inicio</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>Donde los dioses entrenan</p>
+        <p>Calle 7 #7-77, Barrio Centro | +57 3053797024 | u20241221201@usco.edu.co</p>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+        import { getFirestore, doc, getDoc, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+        // firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCAy0wZNxxVS0COcQIrALO3A7a75yu2c7k",
+            authDomain: "gods-gym.firebaseapp.com",
+            projectId: "gods-gym",
+            storageBucket: "gods-gym.firebasestorage.app",
+            messagingSenderId: "1078850723311",
+            appId: "1:1078850723311:web:ece9ce88e9b64b49efea1a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // para cerrar la sesion
+        window.cerrarSesion = async function() {
+            try {
+                await signOut(auth);
+                window.location.href = 'index.html';
+            } catch (error) {
+                alert('Error al cerrar sesión');
+            }
+        };
+
+        onAuthStateChanged(auth, async (user) => {
+            document.getElementById('cargando').style.display = 'none';
+            
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('contenedor-perfil').style.display = 'block';
+
+            document.getElementById('perfil-nombre').textContent = user.displayName || 'Sin nombre';
+            document.getElementById('perfil-email').textContent = user.email;
+
+            try {
+                const usuarioDoc = await getDoc(doc(db, 'usuarios', user.uid));
+                
+                if (usuarioDoc.exists()) {
+                    const datosUsuario = usuarioDoc.data();
+                    
+                    if (datosUsuario.fechaRegistro) {
+                        const fecha = new Date(datosUsuario.fechaRegistro);
+                        document.getElementById('perfil-fecha').textContent = fecha.toLocaleDateString('es-ES');
+                    }
+
+                    if (datosUsuario.rol === 'admin') {
+                        document.getElementById('boton-admin').style.display = 'inline-block';
+                    }
+                }
+
+                const reservasQuery = query(
+                    collection(db, 'reservas'),
+                    where('usuarioId', '==', user.uid)
+                );
+                
+                const reservasSnapshot = await getDocs(reservasQuery);
+                const listaReservas = document.getElementById('lista-reservas');
+                
+                if (reservasSnapshot.empty) {
+                    listaReservas.innerHTML = '<div class="sin-datos">No tienes reservas todavía. ¡Haz tu primera reserva!</div>';
+                } else {
+                    listaReservas.innerHTML = '';
+                    
+                    reservasSnapshot.forEach((docSnapshot) => {
+                        const reserva = docSnapshot.data();
+                        
+                        const estadoClass = reserva.estado === 'pagado' ? 'estado-pagado' : 'estado-pendiente';
+                        const estadoTexto = reserva.estado === 'pagado' ? 'Pagado' : 'Pendiente';
+                        
+                        const reservaHTML = `
+                            <div class="reserva-card">
+                                <div class="reserva-header">
+                                    <span class="reserva-numero">${reserva.numeroReserva}</span>
+                                    <span class="reserva-estado ${estadoClass}">${estadoTexto}</span>
+                                </div>
+                                <div class="reserva-detalles">
+                                    <div class="detalle-item">
+                                        <strong>Nombre:</strong>
+                                        ${reserva.nombreCompleto || 'No especificado'}
+                                    </div>
+                                    <div class="detalle-item">
+                                        <strong>Identificación:</strong>
+                                        ${reserva.identificacion || 'No especificado'}
+                                    </div>
+                                    <div class="detalle-item">
+                                        <strong>Plan:</strong>
+                                        ${reserva.planNombre}
+                                    </div>
+                                    <div class="detalle-item">
+                                        <strong>Precio:</strong>
+                                        $${reserva.precio}
+                                    </div>
+                                    <div class="detalle-item">
+                                        <strong>Fecha:</strong>
+                                        ${reserva.fechaMostrar}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        listaReservas.innerHTML += reservaHTML;
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error al cargar datos:', error);
+            }
+        });
+    </script>
+</body>
+</html>

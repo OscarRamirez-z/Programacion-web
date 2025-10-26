@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>GODS GYM - Clases Grupales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: black;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 35px;
+            font-weight: bold;
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        .info-usuario {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nombre-usuario {
+            color: white;
+            font-size: 14px;
+        }
+
+        .boton-cerrar-sesion {
+            background-color: red;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .contenedor-clases {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: black;
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        .subtitulo {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .grid-clases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .tarjeta-clase {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #ddd;
+        }
+
+        .tarjeta-clase.llena {
+            opacity: 0.7;
+        }
+
+        .clase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .clase-nombre {
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .clase-cupo {
+            background-color: #f0f0f0;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .cupo-disponible {
+            background-color: #e6ffe6;
+            color: #00aa00;
+        }
+
+        .cupo-lleno {
+            background-color: #ffe6e6;
+            color: #cc0000;
+        }
+
+        .clase-info {
+            margin: 15px 0;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .clase-info strong {
+            color: black;
+        }
+
+        .clase-descripcion {
+            margin: 15px 0;
+            color: #555;
+            font-size: 15px;
+        }
+
+        .boton-inscribir {
+            width: 100%;
+            padding: 15px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .boton-inscribir:hover {
+            background-color: #cc0000;
+        }
+
+        .boton-inscribir:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .boton-inscrito {
+            background-color: #666;
+            cursor: default;
+        }
+
+        .boton-inscrito:hover {
+            background-color: #666;
+        }
+
+        .botones-navegacion {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+
+        .boton-nav {
+            background-color: #666;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .boton-nav:hover {
+            background-color: #555;
+        }
+
+        .boton-volver {
+            background-color: #666;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .boton-volver:hover {
+            background-color: #555;
+        }
+
+        .mensaje {
+            background-color: #e6ffe6;
+            color: #00aa00;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+            border-left: 4px solid #00aa00;
+        }
+
+        .mensaje-error {
+            background-color: #ffe6e6;
+            color: #cc0000;
+            border-left-color: #cc0000;
+        }
+
+        footer {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+
+        .cargando {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">GODS GYM</div>
+        <p style="color: white; margin-top: 10px;">Clases Grupales</p>
+        <div class="info-usuario" id="info-usuario">
+            <span class="nombre-usuario" id="nombre-usuario"></span>
+            <button class="boton-cerrar-sesion" onclick="cerrarSesion()">Cerrar Sesión</button>
+        </div>
+    </header>
+
+    <div class="contenedor-clases">
+        <h1>Clases Grupales Disponibles</h1>
+        <p class="subtitulo">Inscríbete en las clases que más te gusten</p>
+
+        <div class="mensaje" id="mensaje"></div>
+
+        <div class="cargando" id="cargando">
+            Cargando clases disponibles...
+        </div>
+
+        <div class="grid-clases" id="grid-clases" style="display: none;">
+        </div>
+
+        <div class="botones-navegacion">
+            <a href="perfil.html" class="boton-nav">Mi Perfil</a>
+            <a href="index.html" class="boton-nav">Volver al Inicio</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>Donde los dioses entrenan</p>
+        <p>Calle 7 #7-77, Barrio Centro | +57 3053797024 | u20241221201@usco.edu.co</p>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+        import { getFirestore, collection, getDocs, doc, updateDoc, arrayUnion, arrayRemove, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCAy0wZNxxVS0COcQIrALO3A7a75yu2c7k",
+            authDomain: "gods-gym.firebaseapp.com",
+            projectId: "gods-gym",
+            storageBucket: "gods-gym.firebasestorage.app",
+            messagingSenderId: "1078850723311",
+            appId: "1:1078850723311:web:ece9ce88e9b64b49efea1a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let usuarioActual = null;
+        let clasesUsuario = [];
+
+        const clasesDisponibles = [
+            {
+                id: 'crossfit-lunes',
+                nombre: 'CrossFit',
+                horario: 'Lunes y Miércoles 6:00 AM',
+                instructor: 'Leonel Messi',
+                duracion: '1 hora',
+                cupoMax: 15,
+                descripcion: 'Ven y practica crossfit con el mejor del mundo.'
+            },
+            {
+                id: 'spinning-martes',
+                nombre: 'Spinning',
+                horario: 'Martes y Jueves 7:00 PM',
+                instructor: 'Shakira',
+                duracion: '45 minutos',
+                cupoMax: 20,
+                descripcion: 'Clase intensa de ciclisom.'
+            },
+            {
+                id: 'yoga-miercoles',
+                nombre: 'Yoga',
+                horario: 'Miércoles y Viernes 8:00 AM',
+                instructor: 'Gustavo Perdomo',
+                duracion: '1 hora',
+                cupoMax: 12,
+                descripcion: 'Relaja tus musculos y mente con nuetro increible profesor de Yoga.'
+            },
+            {
+                id: 'hiit-jueves',
+                nombre: 'HIIT',
+                horario: 'Jueves 6:00 PM',
+                instructor: 'Illo Juan',
+                duracion: '30 minutos',
+                cupoMax: 18,
+                descripcion: 'El entrenamiento de cardio mas increible que puedes sentir.'
+            },
+            {
+                id: 'pilates-viernes',
+                nombre: 'Pilates',
+                horario: 'Viernes 10:00 AM',
+                instructor: 'Nicky Nicole',
+                duracion: '50 minutos',
+                cupoMax: 10,
+                descripcion: 'Porque tu era Pilates tambien en GODS GYM.'
+            },
+            {
+                id: 'funcional-sabado',
+                nombre: 'Entrenamiento Funcional',
+                horario: 'Sábado 9:00 AM',
+                instructor: 'Ferran Torres',
+                duracion: '1 hora',
+                cupoMax: 16,
+                descripcion: 'Los mejores ejercicios para.. funcionar.'
+            }
+        ];
+
+        window.cerrarSesion = async function() {
+            try {
+                await signOut(auth);
+                window.location.href = 'index.html';
+            } catch (error) {
+                alert('Error al cerrar sesión');
+            }
+        };
+
+        function mostrarMensaje(texto, esError = false) {
+            const mensaje = document.getElementById('mensaje');
+            mensaje.textContent = texto;
+            mensaje.classList.toggle('mensaje-error', esError);
+            mensaje.style.display = 'block';
+            setTimeout(() => {
+                mensaje.style.display = 'none';
+            }, 5000);
+        }
+
+        async function inicializarClases() {
+            for (const clase of clasesDisponibles) {
+                const claseRef = doc(db, 'clases', clase.id);
+                const claseDoc = await getDoc(claseRef);
+                
+                if (!claseDoc.exists()) {
+                    await setDoc(claseRef, {
+                        ...clase,
+                        inscritos: [],
+                        cupoActual: 0
+                    });
+                }
+            }
+        }
+
+        async function cargarClases() {
+            const gridClases = document.getElementById('grid-clases');
+            gridClases.innerHTML = '';
+
+            const clasesSnapshot = await getDocs(collection(db, 'clases'));
+            
+            clasesSnapshot.forEach((doc) => {
+                const clase = doc.data();
+                const cupoActual = clase.inscritos ? clase.inscritos.length : 0;
+                const cupoDisponible = clase.cupoMax - cupoActual;
+                const estaLlena = cupoDisponible <= 0;
+                const estaInscrito = clase.inscritos && clase.inscritos.includes(usuarioActual.uid);
+
+                let botonTexto = 'Inscribirse';
+                let botonClass = '';
+                let botonDisabled = '';
+
+                if (estaInscrito) {
+                    botonTexto = '✓ Ya estás inscrito';
+                    botonClass = 'boton-inscrito';
+                } else if (estaLlena) {
+                    botonTexto = 'Cupo Lleno';
+                    botonDisabled = 'disabled';
+                }
+
+                const claseHTML = `
+                    <div class="tarjeta-clase ${estaLlena && !estaInscrito ? 'llena' : ''}">
+                        <div class="clase-header">
+                            <div class="clase-nombre">${clase.nombre}</div>
+                            <div class="clase-cupo ${cupoDisponible > 0 || estaInscrito ? 'cupo-disponible' : 'cupo-lleno'}">
+                                ${cupoDisponible}/${clase.cupoMax} cupos
+                            </div>
+                        </div>
+                        <div class="clase-info">
+                            <div><strong>Horario:</strong> ${clase.horario}</div>
+                            <div><strong>Instructor:</strong> ${clase.instructor}</div>
+                            <div><strong>Duración:</strong> ${clase.duracion}</div>
+                        </div>
+                        <div class="clase-descripcion">
+                            ${clase.descripcion}
+                        </div>
+                        <button 
+                            class="boton-inscribir ${botonClass}" 
+                            onclick="toggleInscripcion('${clase.id}', ${estaInscrito})"
+                            ${botonDisabled}
+                        >
+                            ${botonTexto}
+                        </button>
+                    </div>
+                `;
+
+                gridClases.innerHTML += claseHTML;
+            });
+        }
+
+        window.toggleInscripcion = async function(claseId, estaInscrito) {
+            try {
+                const claseRef = doc(db, 'clases', claseId);
+                const usuarioRef = doc(db, 'usuarios', usuarioActual.uid);
+
+                if (estaInscrito) {
+                    // para desiscribirse de las clases
+                    await updateDoc(claseRef, {
+                        inscritos: arrayRemove(usuarioActual.uid)
+                    });
+                    await updateDoc(usuarioRef, {
+                        clasesInscritas: arrayRemove(claseId)
+                    });
+                    mostrarMensaje('Te has desinscrito de la clase correctamente');
+                } else {
+                    // para inscirbirse
+                    const claseDoc = await getDoc(claseRef);
+                    const clase = claseDoc.data();
+                    const cupoActual = clase.inscritos ? clase.inscritos.length : 0;
+
+                    if (cupoActual >= clase.cupoMax) {
+                        mostrarMensaje('Lo sentimos, esta clase ya está llena', true);
+                        return;
+                    }
+
+                    await updateDoc(claseRef, {
+                        inscritos: arrayUnion(usuarioActual.uid)
+                    });
+                    await updateDoc(usuarioRef, {
+                        clasesInscritas: arrayUnion(claseId)
+                    });
+                    mostrarMensaje('¡Te has inscrito exitosamente a la clase!');
+                }
+
+                // rercargar clases
+                await cargarClases();
+
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarMensaje('Error al procesar la inscripción', true);
+            }
+        };
+
+        onAuthStateChanged(auth, async (user) => {
+            document.getElementById('cargando').style.display = 'none';
+            
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            usuarioActual = user;
+            document.getElementById('nombre-usuario').textContent = `Hola, ${user.displayName || user.email}`;
+            document.getElementById('grid-clases').style.display = 'grid';
+
+            try {
+                await inicializarClases();
+                await cargarClases();
+            } catch (error) {
+                console.error('Error al cargar clases:', error);
+                mostrarMensaje('Error al cargar las clases', true);
+            }
+        });
+    </script>
+</body>
+</html>
